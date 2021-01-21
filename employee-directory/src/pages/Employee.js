@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Api from "../utils/Api";
-
+import API from "../utils/Api";
+//import search form and search results components here
 
 class Employee extends Component {
     state = {
@@ -8,6 +8,16 @@ class Employee extends Component {
     }
 
 
+    loadRandomUsers = () => {
+        API.getRandomUsers()
+          .then(res =>
+            console.log(res)
+            // this.setState({
+            //   image: res.data.message
+            // })
+          )
+          .catch(err => console.log(err));
+      };
 
     render() {
         return();
