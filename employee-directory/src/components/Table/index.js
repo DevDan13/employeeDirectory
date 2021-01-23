@@ -2,15 +2,15 @@ import React from 'react'
 
 export default function Table(props) {
 
-    console.log(props.displayTable)
+    //console.log(props.displayTable)
 
     const tableHeadDisplay = props.tableCellHeaders.map( (tableHead, i) => {
-        console.log(tableHead);
+        //console.log(tableHead);
         return <th key={i}>{tableHead}</th>;
     })
 
     const displayData = props.displayTable.map( (data, i) => {
-        console.log(data);
+        //console.log(data);
         return(
              <tr key={i}>
                  <td>{data.name.first}</td>

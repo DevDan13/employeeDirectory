@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import API from "./utils/Api";
 import Table from "./components/Table/index";
+import Search from "./components/SearchForm/index";
 
 function App() {
-    
-    const [employees, setEmployees] = useState([]); 
+
+    const [employees, setEmployees] = useState([]);
     const [search, setSearch] = useState("");
-    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [filteredEmployees, setFilteredEmployees] = useState([]);
     const tableCellHeaders = ["First", "Last", "E-mail", "Phone"];
 
     //API call used to retreieve users.  setEmployees sets our employees array state.
@@ -16,7 +17,7 @@ function App() {
             setEmployees(res.data.results);
         })
         //getRandom()
-      }, []);
+    }, []);
 
     //   const getRandom = async () => {
     //       console.log('here')
@@ -29,25 +30,27 @@ function App() {
     //   }
 
 
+    //this hook states that if there is a search query, the result will filter through the employee array
+    //based on name.  This is fired up with each change of the search.
     useEffect(() => {
-        
-    })
-        return (
-            <div>
-                <Table tableCellHeaders={tableCellHeaders} displayTable={employees}/>
-  
-            </div>
-        );
-}
- 
-export default App;
+        if (search) {
+            const filteredResult = employees.filter(employee => {
+                if (employee.name.first.toLowerCase().includes(search)) {
+                    return employee;
+                }
+            });
+            //console.log(filteredResult);
+            setFilteredEmployees(filteredResult);
+        }
+    },[search, employees])
 
-//{/* <h1>Hello</h1>
-                // {this.state.users.map( (user) => {
-                //     return (
-                //         <Fragment key>
-                //         <p>{user.phone}</p>
-                //         <p>{user.name.first}</p>
-                //         </Fragment>
-                //     )
-                // })} 
+    //renders the Search and Table components to the page. Table needs to display the search bar.
+    return (
+        <div>
+            <Table tableCellHeaders={tableCellHeaders} displayTable={employees} />
+            <Search search={search} setSearch={setSearch}/>
+        </div>
+    );
+}
+
+export default App;
