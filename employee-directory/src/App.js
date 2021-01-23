@@ -1,44 +1,43 @@
-import {useEffect, Fragment, useState} from "react";
+import React, {useEffect, useState} from "react";
 import API from "./utils/Api";
+import Table from "./components/Table/index";
 
 function App() {
     
     const [employees, setEmployees] = useState([]); 
     const [search, setSearch] = useState("");
     const [filteredUsers, setFilteredUsers] = useState([]);
+    const tableCellHeaders = ["First", "Last", "E-mail", "Phone"];
+
+    //API call used to retreieve users.  setEmployees sets our employees array state.
+    useEffect(() => {
+        API.getRandomUsers().then((res) => {
+            console.log(res);
+            setEmployees(res.data.results);
+        })
+        //getRandom()
+      }, []);
+
+    //   const getRandom = async () => {
+    //       console.log('here')
+    //     //   try {
+    //     //       let result = await  API.getRandomUsers();
+    //     //       console.log('result', result)
+    //     //   } catch (error) {
+    //     //       console.log('err getRandom', error)
+    //     //   }
+    //   }
 
 
     useEffect(() => {
-        //synonmous with componentDidMoun
-        API.getRandomUsers.then((res) => {
-            console.log(res.results);
-            setEmployees(res.results);
-        });
-      }, []);
-
-    // loadRandomUsers = () => {
-    //     API.getRandomUsers()
-    //         .then(res =>
-    //             this.setState({
-    //                 users: res.data.results
-    //             })
-    //         )
-    //         .catch(err => console.log(err))
-    // }
-    // componentDidMount(){
-    //     this.loadRandomUsers()
-    // }
-
-
-
-    render() { 
-        //console.log(this.state.users)
+        
+    })
         return (
             <div>
-                
+                <Table tableCellHeaders={tableCellHeaders} displayTable={employees}/>
+  
             </div>
         );
-    }
 }
  
 export default App;
