@@ -35,20 +35,24 @@ function App() {
     useEffect(() => {
         if (search) {
             const filteredResult = employees.filter(employee => {
-                if (employee.name.first.toLowerCase().includes(search)) {
+                if (
+                    employee.name.first.toLowerCase().includes(search) ||
+                    employee.name.last.toLowerCase().includes(search)
+                ) {
                     return employee;
                 }
             });
             //console.log(filteredResult);
             setFilteredEmployees(filteredResult);
         }
-    },[search, employees])
+    }, [search, employees])
 
     //renders the Search and Table components to the page. Table needs to display the search bar.
+    //if there is no search inthe Search Bar all users will be displayed else the filtered employees will render.
     return (
         <div>
-            <Table tableCellHeaders={tableCellHeaders} displayTable={employees} />
-            <Search search={search} setSearch={setSearch}/>
+            <Search search={search} setSearch={setSearch} />
+            <Table tableCellHeaders={tableCellHeaders} displayTable={!search ? employees : filteredEmployees} />
         </div>
     );
 }
