@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import API from "./utils/Api";
 import Table from "./components/Table/index";
 import Search from "./components/SearchForm/index";
+import Sort from "./components/SortBtn/index";
 
 function App() {
 
     const [employees, setEmployees] = useState([]);
     const [search, setSearch] = useState("");
     const [filteredEmployees, setFilteredEmployees] = useState([]);
+    const [sortedEmployees, setSortedEmployees] = useState([]);
     const tableCellHeaders = ["First", "Last", "E-mail", "Phone"];
 
     //API call used to retreieve users.  setEmployees sets our employees array state.
@@ -18,6 +20,8 @@ function App() {
         })
         //getRandom()
     }, []);
+
+    //alternate method not used.
 
     //   const getRandom = async () => {
     //       console.log('here')
@@ -45,7 +49,16 @@ function App() {
             //console.log(filteredResult);
             setFilteredEmployees(filteredResult);
         }
-    }, [search, employees])
+    }, [search, employees]);
+
+    useEffect(() => {
+        const sort = employees.sort((a, b) => {
+            return a.name.first.localeCompare(b.name.first);
+        });
+        console.log(sort);
+        setSortedEmployees(sort);
+    }), [];
+
 
     //renders the Search and Table components to the page. Table needs to display the search bar.
     //if there is no search inthe Search Bar all users will be displayed else the filtered employees will render.
@@ -53,6 +66,7 @@ function App() {
         <div>
             <Search search={search} setSearch={setSearch} />
             <Table tableCellHeaders={tableCellHeaders} displayTable={!search ? employees : filteredEmployees} />
+            <Sort sort={sortedEmployees} />
         </div>
     );
 }
