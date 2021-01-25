@@ -1,4 +1,6 @@
 import React from 'react'
+import "./style.css";
+import Sort from "../SortBtn/index";
 
 export default function Table(props) {
 
@@ -24,9 +26,10 @@ export default function Table(props) {
     })
 
     return (
-        <table>
-            <thead>
-                <tr>
+        <table className="table table-striped">
+            <thead className="thead-dark">
+                <Sort sort={props.sort} sorted={props.sorted}/><tr>
+                
                     {tableHeadDisplay}
 
                 </tr>
