@@ -1,5 +1,5 @@
 {
-  "homepage": "https://DevDan13.github.io/Employee-Directory",
+  "homepage": "ssh://DevDan13.github.io/Employee-Directory",
   "name": "employee-directory",
   "version": "0.1.0",
   "private": true,
